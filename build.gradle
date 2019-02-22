@@ -1,0 +1,26 @@
+group 'arkadi'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+
+subprojects {
+    apply plugin: 'war'
+    sourceCompatibility = 1.8
+    repositories {
+        mavenCentral()
+    }
+
+    group 'arkadi'
+
+    dependencies {
+        providedCompile 'javax:javaee-api:7.0'
+        providedCompile 'fish.payara.extras:payara-embedded-web:5.184'
+    }
+}
+
+
+

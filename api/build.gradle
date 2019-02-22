@@ -1,0 +1,14 @@
+group 'arkadi'
+version '1.0-SNAPSHOT'
+
+configurations {
+    moreLibs
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //implementation module(":lib")
+}

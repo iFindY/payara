@@ -1,0 +1,6 @@
+rootProject.name = 'payara'
+include ':lib'
+findProject(':lib')?.name = 'arkadi-customers-lib'
+include ':api'
+findProject(':api')?.name = 'arkadi-customers-api'
+
