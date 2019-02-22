@@ -6,7 +6,6 @@ repositories {
 }
 
 
-
 subprojects {
     apply plugin: 'war'
     sourceCompatibility = 1.8
@@ -19,8 +18,12 @@ subprojects {
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
         providedCompile 'fish.payara.extras:payara-embedded-web:5.184'
+        providedCompile 'com.h2database:h2:1.4.197'
     }
 }
+
+
+// TIP hier soll die  api auf lib dependency für jedes projet
 
 
 
