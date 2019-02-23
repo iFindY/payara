@@ -5,22 +5,64 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    task build(type:Jar) {
+        doFirst { task ->
+            println "I'm $task.project.name"
+        }
+    }
+}
 
 subprojects {
     apply plugin: 'war'
+    group 'arkadi'
     sourceCompatibility = 1.8
+
     repositories {
         mavenCentral()
     }
-
-    group 'arkadi'
 
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
         providedCompile 'fish.payara.extras:payara-embedded-web:5.184'
         providedCompile 'com.h2database:h2:1.4.197'
     }
+
+    build {
+        doLast {
+            println "- I depend on micro"
+        }
+        afterEvaluate { Project project ->
+            if (project.log) { doLast {
+                println '$project.name finished build' 
+            }
+        }
+    }
 }
+
+
+project(':api') {
+
+    dependencies {
+        compile project(':lib')
+    }
+
+    configurations {
+        spi
+    }
+
+    build {
+        baseName = 'api-micro'
+        from sourceSets.main.output
+        include('com/arkadi/customers/api/**')
+    }
+
+    artifacts {
+        spi build
+    }
+}
+
+
 
 
 // TIP hier soll die  api auf lib dependency für jedes projet

@@ -1,14 +1,1 @@
-group 'arkadi'
-version '1.0-SNAPSHOT'
-
-configurations {
-    moreLibs
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile project("../lib")
-}
+ext.log=true

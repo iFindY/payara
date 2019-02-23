@@ -1,20 +1,2 @@
-group 'arkadi'
 version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-}
-
-sourceSets {
-    main{
-        java{
-            srcDirs  = ['src/main/java']
-        }
-        resources {
-            srcDirs = ['src/main/resources']
-        }
-    }
-}
+ext.log=true
