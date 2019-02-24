@@ -6,7 +6,7 @@ repositories {
 }
 
 allprojects {
-    task build(type:Jar) {
+    task micro(type:War) {
         doFirst { task ->
             println "I'm $task.project.name"
         }
@@ -28,16 +28,16 @@ subprojects {
         providedCompile 'com.h2database:h2:1.4.197'
     }
 
-    build {
+    micro {
         doLast {
-            println "- I depend on micro"
+            println "- depend on micro"
         }
         afterEvaluate { Project project ->
-            if (project.log) { doLast {
-                println '$project.name finished build' 
+            doLast {
+                println "- $project.name finished build" 
+                }
             }
         }
-    }
 }
 
 
@@ -48,24 +48,15 @@ project(':api') {
     }
 
     configurations {
-        spi
+        api
     }
 
-    build {
+    micro {
         baseName = 'api-micro'
-        from sourceSets.main.output
-        include('com/arkadi/customers/api/**')
+
     }
 
     artifacts {
-        spi build
+        api micro
     }
 }
-
-
-
-
-// TIP hier soll die  api auf lib dependency für jedes projet
-
-
-

@@ -38,9 +38,9 @@ public class CustomersResource {
             con = dataSource.getConnection();
 
             PreparedStatement stmt = con.prepareStatement("CREATE TABLE customers(" +
-                    "id varchar(36) primary key, first_name varchar(255), last_name varchar(255), " +
-                    "email varchar(255), status varchar(255), date_of_birth TIMESTAMP, " +
-                    "updated_at TIMESTAMP, created_at TIMESTAMP)");
+                                     "id varchar(36) primary key, first_name varchar(255), last_name varchar(255), " +
+                                     "email varchar(255), status varchar(255), date_of_birth TIMESTAMP, " +
+                                     "updated_at TIMESTAMP, created_at TIMESTAMP)");
 
             stmt.executeUpdate();
 
@@ -62,7 +62,7 @@ public class CustomersResource {
                                  @QueryParam("offset") Integer offset) throws SQLException {
 
         List<Customer> customers = new ArrayList<>();
-
+        
         String query = "SELECT * FROM customers ORDER BY id";
 
         if (limit != null && limit > 0) {
@@ -131,8 +131,8 @@ public class CustomersResource {
 
         Connection con = dataSource.getConnection();
         PreparedStatement stmt = con.prepareStatement("INSERT INTO customers " +
-                "(id, first_name, last_name, email, date_of_birth, status, created_at, updated_at) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                                 "(id, first_name, last_name, email, date_of_birth, status, created_at, updated_at) " +
+                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
         String id = UUID.randomUUID().toString();
 
