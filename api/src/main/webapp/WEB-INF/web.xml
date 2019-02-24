@@ -11,5 +11,5 @@
         <url>jdbc:h2:mem:arkadi-customers;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
         <user>sa</user>
         <password>sa</password>
-    </data-source>
+    </data-source>  
 </web-app>
