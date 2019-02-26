@@ -1,3 +1,9 @@
+// TIP this have to be on top of the build script
+// TIP this Plugin will be applied  for every subject
+plugins {
+    id "io.swagger.core.v3.swagger-gradle-plugin" version "2.0.7"
+}
+
 group 'arkadi'
 version '1.0-SNAPSHOT'
 
@@ -6,7 +12,7 @@ repositories {
 }
 
 allprojects {
-    task micro(type:War) {
+    task micro(type: War) {
         doFirst { task ->
             println "I'm $task.project.name"
         }
@@ -15,8 +21,7 @@ allprojects {
 
 subprojects {
     apply plugin: 'war'
-    group 'arkadi'
-    sourceCompatibility = 1.8
+    apply plugin: "io.swagger.core.v3.swagger-gradle-plugin"
 
     repositories {
         mavenCentral()
@@ -25,8 +30,11 @@ subprojects {
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
         providedCompile 'fish.payara.extras:payara-embedded-web:5.184'
-        providedCompile 'com.h2database:h2:1.4.197'
+        compile 'com.h2database:h2:1.4.197'
     }
+
+    group 'arkadi'
+    sourceCompatibility = 1.8
 
     micro {
         doLast {
@@ -34,10 +42,10 @@ subprojects {
         }
         afterEvaluate { Project project ->
             doLast {
-                println "- $project.name finished build" 
-                }
+                println "- $project.name finished build"
             }
         }
+    }
 }
 
 
@@ -50,7 +58,7 @@ project(':api') {
     configurations {
         api
     }
-
+    //TIP modify task created for all projects in the all-projects clauses  
     micro {
         baseName = 'api-micro'
 
@@ -58,5 +66,14 @@ project(':api') {
 
     artifacts {
         api micro
+    }
+
+    resolve {
+        outputFileName = 'PayaraAPI'
+        outputFormat = 'JSON'
+        prettyPrint = 'TRUE'
+        classpath = sourceSets.main.runtimeClasspath
+        resourcePackages = ['com.arkadi.customers.api.rest']
+        outputPath = 'main/resspurces'
     }
 }

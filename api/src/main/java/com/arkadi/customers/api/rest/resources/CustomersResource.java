@@ -32,15 +32,12 @@ public class CustomersResource {
     @PostConstruct
     private void init() {
 
-        Connection con = null;
-
-        try {
-            con = dataSource.getConnection();
+        try (Connection con = dataSource.getConnection()) {
 
             PreparedStatement stmt = con.prepareStatement("CREATE TABLE customers(" +
-                                     "id varchar(36) primary key, first_name varchar(255), last_name varchar(255), " +
-                                     "email varchar(255), status varchar(255), date_of_birth TIMESTAMP, " +
-                                     "updated_at TIMESTAMP, created_at TIMESTAMP)");
+                    "id varchar(36) primary key, first_name varchar(255), last_name varchar(255), " +
+                    "email varchar(255), status varchar(255), date_of_birth TIMESTAMP, " +
+                    "updated_at TIMESTAMP, created_at TIMESTAMP)");
 
             stmt.executeUpdate();
 
@@ -48,11 +45,6 @@ public class CustomersResource {
         } catch (SQLException e) {
 
             throw new RuntimeException(e);
-        } finally {
-
-            try {
-                if (con != null) con.close();
-            } catch (SQLException ignored) { }
         }
     }
 
