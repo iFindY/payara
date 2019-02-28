@@ -2,6 +2,7 @@
 // TIP this Plugin will be applied  for every subject
 plugins {
     id "com.benjaminsproule.swagger" version "1.0.0"
+    id 'org.hidetake.swagger.generator' version '2.16.0'
 }
 
 group 'arkadi'
@@ -22,6 +23,7 @@ allprojects {
 subprojects {
     apply plugin: 'war'
     apply plugin: "com.benjaminsproule.swagger"
+    apply plugin: 'org.hidetake.swagger.generator'
 
     repositories {
         mavenCentral()
@@ -29,9 +31,10 @@ subprojects {
 
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
-        providedCompile 'fish.payara.extras:payara-embedded-web:5.184'
-        compile 'io.swagger:swagger-annotations:1.5.22'
+        compileOnly 'io.swagger:swagger-annotations:1.5.22'
         compile 'com.h2database:h2:1.4.197'
+        swaggerUI 'org.webjars:swagger-ui:3.10.0'
+        swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.0'
     }
 
     group 'arkadi'
@@ -74,7 +77,9 @@ project(':api') {
 project(':lib'){
     micro {
         baseName = 'lib-micro'
-
+        from ("$buildDir/swagger-ui-bookStore"){
+            into 'swagger-ui'
+        }
     }
 
     swagger {
@@ -98,7 +103,20 @@ project(':lib'){
             }
             outputPath = "src/main/webapp/document.html"
             swaggerDirectory = "src/main/webapp"
-            attachSwaggerArtifact = true
+            swaggerFileName= 'booksAPI'
+            jsonExampleValues = true
+            attachSwaggerArtifact = truegit
         }
     }
+
+    swaggerSources {
+        bookStore {
+            inputFile = file('src/main/webapp/booksAPI.yaml')
+            code {
+                language = 'html2'
+                outputDir = file("$buildDir/swagger-html")
+            }
+        }
+    }
+    build.dependsOn generateSwaggerUI
 }
