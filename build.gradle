@@ -1,8 +1,9 @@
 // TIP this have to be on top of the build script
 // TIP this Plugin will be applied  for every subject
 plugins {
-    id "com.benjaminsproule.swagger" version "1.0.0"
+    id "com.benjaminsproule.swagger" version "1.0.6"
     id 'org.hidetake.swagger.generator' version '2.16.0'
+    id 'java'
 }
 
 group 'arkadi'
@@ -21,9 +22,10 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: 'java'
     apply plugin: 'war'
-    apply plugin: "com.benjaminsproule.swagger"
     apply plugin: 'org.hidetake.swagger.generator'
+    apply plugin: "com.benjaminsproule.swagger"
 
     repositories {
         mavenCentral()
@@ -31,9 +33,9 @@ subprojects {
 
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
-        compileOnly 'io.swagger:swagger-annotations:1.5.22'
         compile 'com.h2database:h2:1.4.197'
         swaggerUI 'org.webjars:swagger-ui:3.10.0'
+        compileOnly 'io.swagger:swagger-annotations:1.5.22'
         swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.0'
     }
 
@@ -101,17 +103,17 @@ project(':lib'){
                 name = 'basicAuth'
                 type = 'basic'
             }
-            outputPath = "src/main/webapp/document.html"
-            swaggerDirectory = "src/main/webapp"
+            outputPath = "src/main/webapp/api/document.html"
+            swaggerDirectory = "src/main/webapp/api"
             swaggerFileName= 'booksAPI'
             jsonExampleValues = true
-            attachSwaggerArtifact = truegit
+            attachSwaggerArtifact = true
         }
     }
 
     swaggerSources {
         bookStore {
-            inputFile = file('src/main/webapp/booksAPI.yaml')
+            inputFile = file('src/main/webapp/api/booksAPI.yaml')
             code {
                 language = 'html2'
                 outputDir = file("$buildDir/swagger-html")
