@@ -28,6 +28,14 @@
             "schema" : {
               "type" : "array",
               "items" : {
+                "originalRef" : "#/definitions/Book",
+                "$ref" : "#/definitions/Book"
+              }
+            },
+            "responseSchema" : {
+              "type" : "array",
+              "items" : {
+                "originalRef" : "#/definitions/Book",
                 "$ref" : "#/definitions/Book"
               }
             }
@@ -49,6 +57,7 @@
           "description" : "Book to be created",
           "required" : true,
           "schema" : {
+            "originalRef" : "Book",
             "$ref" : "#/definitions/Book"
           }
         } ],
@@ -73,6 +82,10 @@
           "200" : {
             "description" : "Number of books found",
             "schema" : {
+              "type" : "integer",
+              "format" : "int64"
+            },
+            "responseSchema" : {
               "type" : "integer",
               "format" : "int64"
             }
@@ -103,6 +116,11 @@
           "200" : {
             "description" : "Book found",
             "schema" : {
+              "originalRef" : "#/definitions/Book",
+              "$ref" : "#/definitions/Book"
+            },
+            "responseSchema" : {
+              "originalRef" : "#/definitions/Book",
               "$ref" : "#/definitions/Book"
             }
           },
