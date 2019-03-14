@@ -2,8 +2,7 @@
 // TIP this Plugin will be applied  for every subject
 plugins {
     id 'java'
-    id "com.benjaminsproule.swagger" version "1.0.5"
-    id 'org.hidetake.swagger.generator' version '2.16.0'
+    id "io.swagger.core.v3.swagger-gradle-plugin" version "2.0.7"
 }
 
 group 'arkadi'
@@ -24,8 +23,7 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'war'
-    apply plugin: 'org.hidetake.swagger.generator'
-    apply plugin: "com.benjaminsproule.swagger"
+    apply plugin: "io.swagger.core.v3.swagger-gradle-plugin"
 
     repositories {
         mavenCentral()
@@ -34,9 +32,8 @@ subprojects {
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
         compile 'com.h2database:h2:1.4.197'
-        swaggerUI 'org.webjars:swagger-ui:3.10.0'
         compileOnly 'io.swagger:swagger-annotations:1.5.22'
-        swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.0'
+        compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.26'
     }
 
     group 'arkadi'
@@ -84,42 +81,14 @@ project(':lib'){
         }
     }
 
-    swagger {
-        apiSource {
-            println("hier kommt der: $rootDir")
-            springmvc = false
-            locations = ['com.arkadi.books.rest']
-            schemes = ['http', 'https']
-            host = 'localhost:8080'
-            basePath = '/lib'
-            outputFormats = ['json', 'yaml']
-            info {
-                title = "need some swag ?"
-                version = "1.0.0"
-                license {
-                    name = 'Apache 2.0'
-                }
-            }
-            securityDefinition {
-                name = 'basicAuth'
-                type = 'basic'
-            }
-            swaggerDirectory = "$projectDir/src/main/webapp/api"
-            swaggerFileName= 'booksAPI'
-            outputPath = "$projectDir/src/main/webapp/api/document.html"
-            jsonExampleValues = true
-            attachSwaggerArtifact = true
-        }
+    resolve {
+        outputFileName = 'BookStoreAPI'
+        outputFormat = 'JSON'
+        prettyPrint = 'TRUE'
+        readAllResources='TRUE'
+        showCommonExtensions="TRUE"
+        classpath = sourceSets.main.runtimeClasspath
+        resourcePackages = ['com.arkadi.books.rest']
+        outputPath = "$projectDir/src/main/webapp/api"
     }
-
-    swaggerSources {
-        bookStore {
-            inputFile = file('src/main/webapp/api/booksAPI.yaml')
-            code {
-                language = 'html2'
-                outputDir = file("$buildDir/swagger-html")
-            }
-        }
-    }
-    build.dependsOn generateSwaggerUI
 }

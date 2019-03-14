@@ -6,11 +6,13 @@ import com.arkadi.books.repository.BookRepository;
 import io.swagger.annotations.*;
 
 import javax.inject.Inject;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.ext.Provider;
 import java.net.URI;
 import java.util.List;
 
@@ -38,6 +40,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 )
 @Path("/books")
 @Api("Book")
+@Provider
 public class BookEndpoint {
 
     @Inject
@@ -82,7 +85,7 @@ public class BookEndpoint {
             @ApiResponse(code = 400, message = "Invalid input. Id cannot be lower than 1"),
             @ApiResponse(code = 500, message = "Book not found")
     })
-    public Response deleteBook(@PathParam("id") @Min(1) Long id) {
+    public Response deleteBook(@PathParam("id") @Min(1) @Max(10) Long id) {
         bookRepository.delete(id);
         return Response.noContent().allow("DELETE").build();
     }

@@ -1,3 +1,4 @@
 rootProject.name = 'payara'
 include 'lib','api'
-includeBuild 'swagger-gradle-plugin'
+//includeBuild 'swagger-gradle-plugin'
+//includeBuild '../../swagger2'
