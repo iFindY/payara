@@ -1,10 +1,31 @@
+import com.github.kongchen.swagger.docgen.mavenplugin.ApiSource
+import com.github.zhurlik.SwaggerTask
+import io.swagger.models.Contact
+import io.swagger.models.Info
+import io.swagger.models.License
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.zhurlik:gradle-swagger-plugin:0.2"
+        // swagger
+        classpath group: 'io.swagger.core.v3', name: 'swagger-core', version: '2.0.7'
+        classpath group: 'com.github.kongchen', name: 'swagger-maven-plugin', version: '3.1.5'
+
+    }
+}
+
+
 // TIP this have to be on top of the build script
 // TIP this Plugin will be applied  for every subject
 plugins {
     id 'java'
-    id "com.benjaminsproule.swagger" version "1.0.5"
-    id 'org.hidetake.swagger.generator' version '2.16.0'
+    id 'war'
 }
+
+apply plugin: 'com.github.zhurlik.swagger'
 
 group 'arkadi'
 version '1.0-SNAPSHOT'
@@ -15,6 +36,7 @@ repositories {
 
 allprojects {
     task micro(type: War) {
+        setGroup('build')
         doFirst { task ->
             println "I'm $task.project.name"
         }
@@ -24,8 +46,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'war'
-    apply plugin: 'org.hidetake.swagger.generator'
-    apply plugin: "com.benjaminsproule.swagger"
 
     repositories {
         mavenCentral()
@@ -34,9 +54,11 @@ subprojects {
     dependencies {
         providedCompile 'javax:javaee-api:7.0'
         compile 'com.h2database:h2:1.4.197'
-        swaggerUI 'org.webjars:swagger-ui:3.10.0'
-        compileOnly 'io.swagger:swagger-annotations:1.5.22'
-        swaggerCodegen 'io.swagger.codegen.v3:swagger-codegen-cli:3.0.0'
+        compile 'io.swagger:swagger-annotations:1.5.22'
+        compile group: 'io.swagger', name: 'swagger-core', version: '1.5.22'
+        compile group: 'com.github.kongchen', name: 'swagger-maven-plugin', version: '3.1.8'
+
+
     }
 
     group 'arkadi'
@@ -67,7 +89,6 @@ project(':api') {
     //TIP modify task created for all projects in the all-projects clauses  
     micro {
         baseName = 'api-micro'
-
     }
 
     artifacts {
@@ -76,50 +97,48 @@ project(':api') {
 
 }
 
-project(':lib'){
+project(':lib') {
+
+    task('swaggertest', type: SwaggerTask) {
+
+        // any dirs with classes
+        classesDirs = [
+                file('build/classes')
+                // project(':your-project').sourceSets['main'].output.classesDir
+        ]
+
+        apiSources = [
+                new ApiSource(
+                        springmvc: false,
+                        locations: ['com/arkadi/books/rest'],
+                        schemes: ['http', 'https'],
+                        host: 'arkadi.techlead',
+                        basePath: '/api',
+                        info: new Info(
+                                title: 'Swagger Maven Plugin Sample',
+                                version: 'v1',
+                                description: 'This is a sample for swagger-maven-plugin',
+                                termsOfService: 'http://www.github.com/kongchen/swagger-maven-plugin',
+                                contact: new Contact(
+                                        email: 'kongchen@gmail.com',
+                                        name: 'Kong Chen',
+                                        url: 'http://kongch.com'
+                                ),
+                                license: new License(
+                                        url: 'http://www.apache.org/licenses/LICENSE-2.0.html',
+                                        name: 'Apache 2.0'
+                                )
+                        ),
+                        outputPath: file("${buildDir}/swagger/document.html").path,
+                        swaggerDirectory: file("${buildDir}/swagger/swagger-ui").path,
+                )
+        ]
+    }
+
     micro {
         baseName = 'lib-micro'
-        from ("$buildDir/swagger-ui-bookStore"){
+        from("$buildDir/swagger-ui-bookStore") {
             into 'swagger-ui'
         }
     }
-
-    swagger {
-        apiSource {
-            println("hier kommt der: $rootDir")
-            springmvc = false
-            locations = ['com.arkadi.books.rest']
-            schemes = ['http', 'https']
-            host = 'localhost:8080'
-            basePath = '/lib'
-            outputFormats = ['json', 'yaml']
-            info {
-                title = "need some swag ?"
-                version = "1.0.0"
-                license {
-                    name = 'Apache 2.0'
-                }
-            }
-            securityDefinition {
-                name = 'basicAuth'
-                type = 'basic'
-            }
-            swaggerDirectory = "$projectDir/src/main/webapp/api"
-            swaggerFileName= 'booksAPI'
-            outputPath = "$projectDir/src/main/webapp/api/document.html"
-            jsonExampleValues = true
-            attachSwaggerArtifact = true
-        }
-    }
-
-    swaggerSources {
-        bookStore {
-            inputFile = file('src/main/webapp/api/booksAPI.yaml')
-            code {
-                language = 'html2'
-                outputDir = file("$buildDir/swagger-html")
-            }
-        }
-    }
-    build.dependsOn generateSwaggerUI
 }

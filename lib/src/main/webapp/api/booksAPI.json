@@ -28,15 +28,15 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "originalRef" : "#/definitions/Book",
-                "$ref" : "#/definitions/Book"
+                "$ref" : "#/definitions/Book",
+                "originalRef" : "#/definitions/Book"
               }
             },
             "responseSchema" : {
               "type" : "array",
               "items" : {
-                "originalRef" : "#/definitions/Book",
-                "$ref" : "#/definitions/Book"
+                "$ref" : "#/definitions/Book",
+                "originalRef" : "#/definitions/Book"
               }
             }
           },
@@ -57,8 +57,8 @@
           "description" : "Book to be created",
           "required" : true,
           "schema" : {
-            "originalRef" : "Book",
-            "$ref" : "#/definitions/Book"
+            "$ref" : "#/definitions/Book",
+            "originalRef" : "Book"
           }
         } ],
         "responses" : {
@@ -116,12 +116,12 @@
           "200" : {
             "description" : "Book found",
             "schema" : {
-              "originalRef" : "#/definitions/Book",
-              "$ref" : "#/definitions/Book"
+              "$ref" : "#/definitions/Book",
+              "originalRef" : "#/definitions/Book"
             },
             "responseSchema" : {
-              "originalRef" : "#/definitions/Book",
-              "$ref" : "#/definitions/Book"
+              "$ref" : "#/definitions/Book",
+              "originalRef" : "#/definitions/Book"
             }
           },
           "400" : {
