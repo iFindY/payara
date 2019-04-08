@@ -1,7 +1,7 @@
 package com.arkadi.books.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import javax.persistence.*;
@@ -12,52 +12,52 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@ApiModel(description = "Book resource representation")
+@Schema(description = "Book resource representation")
 public class Book {
 
     @Id
     @GeneratedValue
-    @ApiModelProperty("Identifier")
+    @Schema(description = "Identifier")
     private Long id;
 
     @Column(length = 200)
     @NotNull
     @Size(min = 1, max = 200)
-    @ApiModelProperty("Title of the book")
+    @Schema(description = "Title of the book")
     private String title;
 
     @Column(length = 10000)
     @Size(min = 1, max = 10000)
-    @ApiModelProperty("Summary describing the book")
+    @Schema(description = "Summary describing the book")
     private String description;
 
     @Column(name = "unit_cost")
     @Min(1)
-    @ApiModelProperty("Unit cost")
+    @Schema(description = "Unit cost")
     private Float unitCost;
 
     @Column(length = 50)
     @NotNull
     @Size(min = 1, max = 50)
-    @ApiModelProperty("ISBN number")
+    @Schema(description = "ISBN number")
     private String isbn;
 
     @Column(name = "publication_date")
     @Temporal(TemporalType.DATE)
     @Past
-    @ApiModelProperty("Date in which the book has been published")
+    @Schema(description = "Date in which the book has been published")
     private Date publicationDate;
 
     @Column(name = "nb_of_pages")
-    @ApiModelProperty("Number of pages")
+    @Schema(description = "Number of pages",maximum = "5000",pattern = "\\d+")
     private Integer nbOfPages;
 
     @Column(name = "image_url")
-    @ApiModelProperty("URL of the image cover")
+    @Schema(description = "URL of the image cover")
     private String imageURL;
 
     @Enumerated
-    @ApiModelProperty(value = "Language in which the book has been written")
+    @Schema(description = "Language in which the book has been written")
     private Language language;
 
     public Book() {

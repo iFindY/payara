@@ -1,19 +1,4 @@
-{
-  "swagger" : "2.0",
-  "info" : {
-    "version" : "1.0.0",
-    "title" : "need some swag ?",
-    "license" : {
-      "name" : "Apache 2.0"
-    }
-  },
-  "host" : "localhost:8080",
-  "basePath" : "/lib",
-  "tags" : [ {
-    "name" : "Book",
-    "description" : "Tag used to denote operations as private"
-  } ],
-  "schemes" : [ "http", "https" ],
+
   "paths" : {
     "/books" : {
       "get" : {
