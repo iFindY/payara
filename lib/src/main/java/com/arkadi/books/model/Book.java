@@ -49,7 +49,7 @@ public class Book {
     private Date publicationDate;
 
     @Column(name = "nb_of_pages")
-    @Schema(description = "Number of pages",maximum = "5000",pattern = "\\d+")
+    @Schema(description = "Number of pages", maximum = "5000", pattern = "\\d+")
     private Integer nbOfPages;
 
     @Column(name = "image_url")

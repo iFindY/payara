@@ -38,7 +38,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Bookstore APIs",
-                description = "Novomind APIs exposed from a Java EE back-end to an Angular front-end",
+                description = "Bookstore APIs exposed from a Java EE back-end to an Angular front-end",
                 version = "V1.0.0",
                 contact = @Contact(
                         name = "Arkadi Daschkewitsch",
@@ -57,7 +57,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
         },
         externalDocs = @ExternalDocumentation(
                 description = "xwiki link",
-                url = "https//:novomind.pim.wiki.de"))
+                url = "https//:arkadi.pim.wiki.de"))
 @Path("/books")
 @Provider
 public class BookEndpoint {
@@ -67,7 +67,7 @@ public class BookEndpoint {
 
     @POST
     @Consumes(APPLICATION_JSON)
-    @Operation(description = "Creates a book given a JSon Book representation", summary = "create a book",tags = "Book",
+    @Operation(description = "Creates a book given a JSon Book representation", summary = "create a book", tags = "Book",
             parameters = {
                     @Parameter(in = ParameterIn.QUERY, required = true, name = "book", schema = @Schema(implementation = Book.class))},
             responses = {
@@ -83,6 +83,9 @@ public class BookEndpoint {
     @DELETE
     @Path("/{id : \\d+}")
     @Operation(summary = "Deletes a book given an id", description = "deletes a book given an id, this operation cant ak more time then expected",
+            parameters = {
+                    @Parameter(ref = "parameters.json#/id")
+            },
             responses = {
                     @ApiResponse(responseCode = "204", description = "Book has been deleted"),
                     @ApiResponse(responseCode = "400", description = "Invalid input. Id cannot be lower than 1"),
@@ -98,6 +101,9 @@ public class BookEndpoint {
     @Path("/{id : \\d+}")
     @Produces(APPLICATION_JSON)
     @Operation(summary = "returns a book", description = "Returns a book given an id",
+            parameters = {
+                    @Parameter(ref = "parameters.json#/id")
+            },
             responses = {
                     @ApiResponse(responseCode = "200", description = "Book found", content = @Content(
                             mediaType = APPLICATION_JSON, schema = @Schema(implementation = Book.class))),
@@ -117,8 +123,9 @@ public class BookEndpoint {
     @Produces(APPLICATION_JSON)
     @Operation(summary = "Returns all the books", description = "return all books in a json format without author personal data",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Books found",
-                            content = @Content(mediaType = APPLICATION_JSON, array = @ArraySchema(schema = @Schema(implementation = Book.class)))),
+                    @ApiResponse(responseCode = "200", description = "Books found", content = @Content(
+                            mediaType = APPLICATION_JSON,
+                            array = @ArraySchema(schema = @Schema(implementation = Book.class)))),
                     @ApiResponse(responseCode = "204", description = "No books found")})
     public Response getBooks() {
         List<Book> books = bookRepository.findAll();

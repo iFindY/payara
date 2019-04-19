@@ -1,7 +1,6 @@
 package com.arkadi.books.repository;
 
 
-
 import com.arkadi.books.model.Book;
 import com.arkadi.books.utility.NumberGenerator;
 import com.arkadi.books.utility.TextUtil;
@@ -43,7 +42,7 @@ public class BookRepository {
     }
 
     @Transactional(REQUIRED)
-    public void delete(@NotNull  Long id) {
+    public void delete(@NotNull Long id) {
         em.remove(em.getReference(Book.class, id));
     }
 

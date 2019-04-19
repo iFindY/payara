@@ -98,7 +98,7 @@ project(':lib'){
         novoApi {
             inputFile = file('src/main/webapp/api/BookStoreAPI-3.json')
             code {
-                outputDir = file("$buildDir/swagger-ui")
+                outputDir = file("/Users/arkadi/Develop/Server/nginx/var/www/my.swagger")
             }
         }
     }

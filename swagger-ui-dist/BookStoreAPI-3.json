@@ -129,7 +129,13 @@
         "description" : "deletes a book given an id, this operation cant ak more time then expected",
         "operationId" : "deleteBook",
         "parameters" : [ {
-          "$ref" : "parameters.json#/id"
+          "name" : "id",
+          "in" : "path",
+          "description" : "identifier of a book",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
         }, {
           "name" : "id",
           "in" : "path",

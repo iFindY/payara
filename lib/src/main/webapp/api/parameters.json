@@ -1,0 +1,10 @@
+{
+  "id": {
+    "name": "id",
+    "in": "path",
+    "description": "identifier of a book",
+    "required": true,
+    "type": "string",
+    "example": "12345"
+  }
+}
