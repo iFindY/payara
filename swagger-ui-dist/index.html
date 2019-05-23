@@ -39,7 +39,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "/BookStoreAPI-3.json",
+        url: "NovomindAPI.json",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
@@ -49,7 +49,7 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout"
+        layout: "BaseLayout"
       })
       // End Swagger UI call region
 

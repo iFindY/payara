@@ -1,0 +1,178 @@
+{
+  "productNo": {
+    "required": "true",
+    "name": "productNo",
+    "in": "path",
+    "description": "to identify parent article",
+    "schema": {
+      "type": "String"
+    },
+    "example": "234234324"
+  },
+  "assetSize": {
+    "name": "assetSize",
+    "in": "query",
+    "description": "a profile title for restricting result",
+    "schema": {
+      "type": "String"
+    },
+    "example": "PICTURES_JPG_SMALL,PICTURES_JPG_MEDIUM,PICTURES_JPG_LARGE,ORIGINAL_FORMAT"
+  },
+  "attributes": {
+    "name": "attributes",
+    "in": "query",
+    "description": "List of attribute identifiers (comma separated)",
+    "schema": {
+      "type": "String"
+    },
+    "default": "ALL",
+    "example": "ALL, NONE, [12,34,546,56]"
+  },
+  "locale": {
+    "name": "locale",
+    "in": "query",
+    "description": "language selector",
+    "schema": {
+      "type": "String"
+    },
+    "default": "deDE",
+    "example": "enGB"
+  },
+  "mainAsset": {
+    "name": "mainAsset",
+    "in": "query",
+    "description": "if true, the default asset will be computed and added",
+    "schema": {
+      "type": "String"
+    },
+    "default": "false",
+    "example": "true"
+  },
+  "type": {
+    "name": "type",
+    "in": "query",
+    "schema": {
+      "type": "String"
+    },
+    "enum": "[technical, display, closed, new]",
+    "default": "technical",
+    "description": "if 'display', state-description is added",
+    "example": "display"
+  },
+  "partner": {
+    "required": "true",
+    "name": "partner",
+    "in": "query",
+    "description": "a partner unique name",
+    "schema": {
+      "type": "String"
+    },
+    "default": "ALL",
+    "example": "Novomind"
+  },
+  "clientInheritance": {
+    "required": "true",
+    "name": "clientInheritance",
+    "in": "query",
+    "description": "if true data will be inherited from parent client levels",
+    "schema": {
+      "type": "String"
+    },
+    "default": "false",
+    "example": "true"
+  },
+  "assetRelationAttributes": {
+    "name": "assetRelationAttributes",
+    "in": "query",
+    "description": "optional list of article asset relation attribute identifiers",
+    "schema": {
+      "type": "String"
+    },
+    "example": "missing"
+  },
+  "categoryNodeIdentifier": {
+    "required": "true",
+    "name": "categoryNodeIdentifier",
+    "in": "path",
+    "description": "missing",
+    "schema": {
+      "type": "String"
+    },
+    "example": "234234324"
+  },
+  "versionIdentifier": {
+    "name": "versionIdentifier",
+    "in": "query",
+    "description": " version membership",
+    "schema": {
+      "type": "String"
+    },
+    "example": "PICTURES_JPG_SMALL,PICTURES_JPG_MEDIUM,PICTURES_JPG_LARGE,ORIGINAL_FORMAT"
+  },
+  "limit": {
+    "name": "limit",
+    "in": "query",
+    "description": "set max result count",
+    "schema": {
+      "type": "String"
+    },
+    "default": "250",
+    "example": "1000"
+  },
+  "page": {
+    "name": "page",
+    "in": "query",
+    "description": "delimit the result set",
+    "schema": {
+      "type": "String"
+    },
+    "default": "0",
+    "example": "missing"
+  },
+  "filterByProductNo": {
+    "name": "filterByProductNo",
+    "in": "query",
+    "description": " a like query parameter",
+    "schema": {
+      "type": "String"
+    },
+    "example": "missing "
+  },
+  "include": {
+    "name": "limit",
+    "in": "query",
+    "description": "missing",
+    "type": "int",
+    "default": "-1",
+    "example": "all, itemURIs"
+  },
+  "mode": {
+    "name": "mode",
+    "in": "query",
+    "description": "set mode to full or incremental",
+    "schema": {
+      "type": "String"
+    },
+    "enum": "[full, incremental]",
+    "example": "full"
+  },
+  "approval": {
+    "name": "approval",
+    "in": "query",
+    "description": "the approval flag",
+    "schema": {
+      "type": "String"
+    },
+    "default": "true",
+    "example": "false"
+  },
+  "jsonString": {
+    "name": "jsonString",
+    "in": "query",
+    "description": "container with values to modify",
+    "schema": {
+      "type": "String"
+    },
+    "example": "{'title': 'children's book'}"
+  }
+}

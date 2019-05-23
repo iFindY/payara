@@ -84,7 +84,7 @@ public class BookEndpoint {
     @Path("/{id : \\d+}")
     @Operation(summary = "Deletes a book given an id", description = "deletes a book given an id, this operation cant ak more time then expected",
             parameters = {
-                    @Parameter(ref = "parameters.json#/id")
+                    @Parameter(schema = @Schema(ref = "parameters.json#/id"))
             },
             responses = {
                     @ApiResponse(responseCode = "204", description = "Book has been deleted"),

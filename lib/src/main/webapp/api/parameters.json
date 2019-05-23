@@ -4,7 +4,9 @@
     "in": "path",
     "description": "identifier of a book",
     "required": true,
-    "type": "string",
+    "schema": {
+      "type": "String"
+    },
     "example": "12345"
   }
 }
